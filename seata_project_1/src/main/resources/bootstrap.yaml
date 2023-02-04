@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: seata_project_1
+  cloud:
+    nacos:
+      config:
+        server-addr: 192.168.230.128:8848
+        namespace: c74e8dba-eef1-43dc-be58-9b694560680e
+        file-extension: yaml
+        group: DEFAULT_GROUP
+      # 【注册中心】相关配置
+      discovery:
+        # 注册中心地址
+        server-addr: 192.168.230.128:8848
+        # 命名空间（大分组）
+        namespace: c74e8dba-eef1-43dc-be58-9b694560680e
+        # 分组名称，默认为【DEFAULT_GROUP】
+        group: DEFAULT_GROUP

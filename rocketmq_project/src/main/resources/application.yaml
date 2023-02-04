@@ -2,7 +2,7 @@ server:
   port: 8890
 # 2.2.0及以上版本
 rocketmq:
-  name-server: 192.168.36.11:9876
+  name-server: 192.168.230.128:9876
   producer:
     group: my-group
     sendMessageTimeout: 30000
