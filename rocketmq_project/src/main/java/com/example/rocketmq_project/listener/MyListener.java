@@ -13,9 +13,10 @@ import org.springframework.stereotype.Component;
  * @Author liwenbo
  */
 @Component
-@RocketMQMessageListener(topic = "my-topic", consumerGroup = "my-group", consumeMode = ConsumeMode.ORDERLY)
+@RocketMQMessageListener(topic = "my-topic", consumerGroup = "my-group", consumeMode = ConsumeMode.ORDERLY, selectorExpression = "*")
 @Slf4j
 public class MyListener implements RocketMQListener<String> {
+    // selectorExpression 为*时表示接收所有tag
 
 
     /*
