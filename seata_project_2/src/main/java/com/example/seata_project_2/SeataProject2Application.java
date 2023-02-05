@@ -1,17 +1,15 @@
-package com.example.seata_project_1;
+package com.example.seata_project_2;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.cloud.openfeign.EnableFeignClients;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-@EnableFeignClients
-public class SeataProject1Application {
+public class SeataProject2Application {
 
     public static void main(String[] args) {
-        SpringApplication.run(SeataProject1Application.class, args);
+        SpringApplication.run(SeataProject2Application.class, args);
     }
 
 }

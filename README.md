@@ -2,4 +2,4 @@
 
 各种技术实操项目
 
-# 1.rocketMQ 实操
+# 1.rocketMQ 实践

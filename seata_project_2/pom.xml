@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.example</groupId>
-    <artifactId>seata_project_1</artifactId>
+    <artifactId>seata_project_2</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>seata_project_1</name>
-    <description>seata_project_1</description>
+    <name>seata_project_2</name>
+    <description>seata_project_2</description>
 
     <properties>
         <java.version>1.8</java.version>
@@ -39,7 +39,6 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.11</version>
         </dependency>
         <!-- seata -->
         <dependency>
@@ -73,30 +72,9 @@
         </dependency>
         <!-- feign -->
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-openfeign</artifactId>
-            <version>3.1.4</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.springframework.cloud</groupId>
-                    <artifactId>spring-cloud-starter-netflix-ribbon</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-commons</artifactId>
-            <version>3.1.3</version>
-        </dependency>
-        <!--        <dependency>-->
-<!--            <groupId>org.springframework.cloud</groupId>-->
-<!--            <artifactId>spring-cloud-starter-netflix-ribbon</artifactId>-->
-<!--            <version>2.2.9.RELEASE</version>-->
-<!--        </dependency>-->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-loadbalancer</artifactId>
-            <version>3.1.4</version>
+            <groupId>io.github.openfeign</groupId>
+            <artifactId>feign-core</artifactId>
+            <version>11.8</version>
         </dependency>
         <!-- MP -->
         <dependency>

@@ -1,6 +1,6 @@
 spring:
   application:
-    name: seata-project-1
+    name: seata-project-2
   cloud:
     nacos:
       config:
