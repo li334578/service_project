@@ -11,9 +11,11 @@ import com.example.seata_project_1.pojo.Order;
 import com.example.seata_project_1.pojo.Storage;
 import com.example.seata_project_1.service.OrderService;
 import com.example.seata_project_1.service.StorageService;
+import io.seata.spring.annotation.GlobalTransactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.UUID;
@@ -41,22 +43,26 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
      * @Return: OrderDTO  订单对象
      */
     @Override
+    @GlobalTransactional
     public ObjectResponse<OrderDTO> createOrder(OrderDTO orderDTO) {
         ObjectResponse<OrderDTO> response = new ObjectResponse<>();
         //扣减用户账户
         ObjectResponse objectResponse = decreaseAccount(orderDTO);
         if (objectResponse.getStatus() != 200) {
-            response.setStatus(RspStatusEnum.FAIL.getCode());
-            response.setMessage(RspStatusEnum.FAIL.getMessage());
-            return response;
+            throw new RuntimeException("扣减金额失败");
+//            response.setStatus(RspStatusEnum.FAIL.getCode());
+//            response.setMessage(RspStatusEnum.FAIL.getMessage());
+//            return response;
         }
         // 扣减库存 失败回滚
         Storage storage = storageService.getStorageByCommodityCode(orderDTO);
-        if (storage.getCount() < orderDTO.getOrderCount()){
+        int a = 1/0;
+        if (storage.getCount() < orderDTO.getOrderCount()) {
             // 库存不够
-            response.setStatus(RspStatusEnum.FAIL.getCode());
-            response.setMessage(RspStatusEnum.FAIL.getMessage());
-            return response;
+            throw new RuntimeException("库存不足");
+//            response.setStatus(RspStatusEnum.FAIL.getCode());
+//            response.setMessage(RspStatusEnum.FAIL.getMessage());
+//            return response;
         }
         storage.setCount(storage.getCount() - orderDTO.getOrderCount());
         storageService.updateById(storage);
