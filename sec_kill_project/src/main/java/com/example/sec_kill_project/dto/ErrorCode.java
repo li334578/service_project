@@ -14,6 +14,10 @@ public enum ErrorCode {
     // -------------- 普通错误码 及保留错误码 ---------------
     SUCCESS(0, "操作成功"),
     FAIL(9999, "操作失败"),
+    ILLEGAL_ARGUMENT(100, "非法参数异常"),
+    TIME_OUT(101, "请求超时，请重新请求"),
+    SALE_EMPTY(102, "商品已经售空"),
+
 
     UNKNOWN_ERROR(99999, "未知错误");
 
