@@ -14,6 +14,7 @@ import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.redisson.Redisson;
 import org.redisson.api.BatchOptions;
 import org.redisson.api.RBucket;
+import org.redisson.api.RLock;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -75,24 +76,49 @@ public class OrderController {
         return ResponseDTO.ok();
     }
 
+    public boolean method(String key) throws InterruptedException {
+        RLock lock = redisson.getLock("lock:" + key);
+        try {
+            if (!goodsStockCache.get(key, () -> true) && lock.tryLock(1000, TimeUnit.MILLISECONDS) && !goodsStockCache.get(key, () -> true)) {
+                RBucket<Integer> stockBucket = redisson.getBucket(key);
+                int value = stockBucket.get() - 1;
+                stockBucket.set(value);
+                if (value <= 0) {
+                    goodsStockCache.put(key, true);
+                }
+                return true;
+            }
+        } catch (ExecutionException e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (lock.isHeldByCurrentThread()) {
+                lock.unlock();
+            }
+        }
+        return false;
+    }
+
     @PutMapping("purchase")
-    public ResponseDTO purchaseGoods(@RequestBody PurchaseDto purchaseDto) throws ExecutionException {
+    public ResponseDTO purchaseGoods(@RequestBody PurchaseDto purchaseDto) throws ExecutionException, InterruptedException {
         // 购买商品
         if (!rateLimiter.tryAcquire(1000, TimeUnit.MILLISECONDS)) {
-            return ResponseDTO.fail(ErrorCode.ILLEGAL_ARGUMENT);
+            return ResponseDTO.fail(ErrorCode.TIME_OUT);
         }
         String key = GOODS_PREFIX + purchaseDto.getGoodsId();
-        if (goodsStockCache.get(key, () -> true)) {
+        if (goodsStockCache.get(key, () -> false)) {
             // 商品已经没有库存
             return ResponseDTO.fail(ErrorCode.SALE_EMPTY);
         }
         // 走到这说明有库存  抢购
         // 1.预减库存
-        RBucket<Integer> stockBucket = redisson.getBucket(key);
-        int value = stockBucket.get() - 1;
-        stockBucket.set(value);
-        if (value == 0) {
-            goodsStockCache.put(key, true);
+        int count = 0;
+        while (count < 5 && !method(key)) {
+            count++;
+            TimeUnit.MILLISECONDS.sleep(120);
+        }
+        if (count == 5) {
+            // 自旋五次还没成功
+            return ResponseDTO.fail(ErrorCode.TIME_OUT);
         }
 
         SendCallback back = new SendCallback() {
