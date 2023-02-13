@@ -79,7 +79,7 @@ public class OrderController {
     public boolean method(String key) throws InterruptedException {
         RLock lock = redisson.getLock("lock:" + key);
         try {
-            if (!goodsStockCache.get(key, () -> true) && lock.tryLock(1000, TimeUnit.MILLISECONDS) && !goodsStockCache.get(key, () -> true)) {
+            if (lock.tryLock(1000, TimeUnit.MILLISECONDS) && !goodsStockCache.get(key, () -> true)) {
                 RBucket<Integer> stockBucket = redisson.getBucket(key);
                 int value = stockBucket.get() - 1;
                 stockBucket.set(value);
@@ -114,7 +114,7 @@ public class OrderController {
         int count = 0;
         while (count < 5 && !method(key)) {
             count++;
-            TimeUnit.MILLISECONDS.sleep(120);
+            TimeUnit.MILLISECONDS.sleep(20);
         }
         if (count == 5) {
             // 自旋五次还没成功
