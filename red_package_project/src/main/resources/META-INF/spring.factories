@@ -1,0 +1,2 @@
+org.springframework.boot.SpringApplicationRunListener=\
+  com.example.red_package_project.listener.MySpringApplicationRunListener
