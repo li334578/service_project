@@ -1,11 +1,11 @@
 package com.example.red_package_project.controller;
 
+import com.example.red_package_project.event.MyEvent;
 import com.example.red_package_project.pojo.Person;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import javax.validation.Valid;
 
 /**
@@ -18,8 +18,20 @@ import javax.validation.Valid;
 @RequestMapping("/person")
 public class PersonController {
 
+    @Resource
+    private ApplicationEventPublisher publisher;
+
     @PostMapping("/add")
     public void addPerson(@RequestBody @Valid Person person) {
         System.out.println(person);
+    }
+
+    @GetMapping("/publish/{name}")
+    public String publishEvent(@PathVariable("name") String name) {
+        Person person = new Person();
+        MyEvent event = new MyEvent(person);
+        event.setName(name);
+        publisher.publishEvent(event);
+        return "OK";
     }
 }
