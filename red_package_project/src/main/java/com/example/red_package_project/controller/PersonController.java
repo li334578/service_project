@@ -2,6 +2,8 @@ package com.example.red_package_project.controller;
 
 import com.example.red_package_project.event.MyEvent;
 import com.example.red_package_project.pojo.Person;
+import com.example.red_package_project.pojo.SingletonEhan;
+import com.example.red_package_project.pojo.SingletonInnerStatic;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,6 +34,20 @@ public class PersonController {
         MyEvent event = new MyEvent(person);
         event.setName(name);
         publisher.publishEvent(event);
+        return "OK";
+    }
+
+    @GetMapping("/testInstance")
+    public String testInstance() {
+        SingletonEhan instance = SingletonEhan.getInstance();
+        SingletonInnerStatic instance1 = SingletonInnerStatic.getInstance();
+        return "OK";
+    }
+
+    @GetMapping("/testInstanceMyMethod")
+    public String testInstanceMyMethod() {
+        SingletonEhan.myMethod();
+        SingletonInnerStatic.myMethod();
         return "OK";
     }
 }

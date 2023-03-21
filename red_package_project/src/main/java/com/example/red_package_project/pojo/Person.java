@@ -34,7 +34,6 @@ public class Person {
     @Pattern(regexp = "1\\d{10}")
     private String phone;
 
-    @Email(message = "邮箱不符合规则")
     private String email;
 
     @Gender
