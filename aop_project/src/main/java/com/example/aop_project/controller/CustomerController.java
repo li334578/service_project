@@ -42,5 +42,11 @@ public class CustomerController {
         }
         return "OK";
     }
+
+    @PostMapping("testTransactional")
+    public String testTransactional(@RequestBody Customer customer) {
+        customerService.testTransactional(customer);
+        return "OK";
+    }
 }
 

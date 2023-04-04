@@ -7,6 +7,7 @@ import org.springframework.aop.aspectj.AspectJExpressionPointcut;
 import org.springframework.aop.support.DefaultPointcutAdvisor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.interceptor.DefaultTransactionAttribute;
@@ -22,7 +23,7 @@ import javax.annotation.Resource;
  * @Author liwenbo
  */
 @Aspect
-@Configuration
+@Component
 @Slf4j
 public class TransactionAop {
 

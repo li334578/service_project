@@ -17,5 +17,7 @@ public interface CustomerService extends IService<Customer> {
     List<Customer> queryAllCustomer();
 
     void addCustomer(Customer customer) throws IOException;
+
+    void testTransactional(Customer customer);
 }
 

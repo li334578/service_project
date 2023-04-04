@@ -1,5 +1,6 @@
 package com.example.aop_project.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.aop_project.entity.Customer;
 import com.example.aop_project.entity.Order;
@@ -7,6 +8,7 @@ import com.example.aop_project.mapper.CustomerMapper;
 import com.example.aop_project.service.CustomerService;
 import com.example.aop_project.service.OrderService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.io.IOException;
@@ -42,6 +44,17 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
         order.setCustomerPhone(customer.getCustomerPhone());
         order.setOrderNumber("测试单号" + customer.getId());
         orderService.save(order);
+    }
+
+    @Transactional
+    @Override
+    public void testTransactional(Customer customer) {
+        // 此处事务的隔离级别主要是影响两个事务之间相互读取的情况
+        Customer one1 = this.getOne(new LambdaQueryWrapper<Customer>().eq(Customer::getCustomerName, "朱八"));
+        this.save(customer);
+        Customer one2 = this.getOne(new LambdaQueryWrapper<Customer>().eq(Customer::getCustomerName, "朱八"));
+        int a = 1 / 0;
+        System.out.println(one1);
     }
 }
 
