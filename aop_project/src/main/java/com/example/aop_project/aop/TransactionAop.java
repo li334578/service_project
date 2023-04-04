@@ -23,7 +23,7 @@ import javax.annotation.Resource;
  * @Author liwenbo
  */
 @Aspect
-@Component
+@Configuration
 @Slf4j
 public class TransactionAop {
 
