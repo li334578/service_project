@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.aop_project.mapper.CustomerMapper">
+
+    <resultMap type="com.example.aop_project.entity.Customer" id="CustomerMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="customerName" column="customer_name" jdbcType="VARCHAR"/>
+        <result property="customerPhone" column="customer_phone" jdbcType="VARCHAR"/>
+        <result property="customerAddress" column="customer_address" jdbcType="VARCHAR"/>
+    </resultMap>
+
+</mapper>
