@@ -1,6 +1,7 @@
 package com.example.rocketmq_project.listener;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.rocketmq.common.message.Message;
 import org.apache.rocketmq.spring.annotation.ConsumeMode;
 import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
 import org.apache.rocketmq.spring.core.RocketMQListener;
@@ -13,9 +14,9 @@ import org.springframework.stereotype.Component;
  * @Author liwenbo
  */
 @Component
-@RocketMQMessageListener(topic = "my-topic", consumerGroup = "my-group", consumeMode = ConsumeMode.ORDERLY, selectorExpression = "*")
+//@RocketMQMessageListener(topic = "my-topic", consumerGroup = "my-group", consumeMode = ConsumeMode.ORDERLY, selectorExpression = "TagA")
 @Slf4j
-public class MyListener implements RocketMQListener<Object> {
+public class MyListenerTag implements RocketMQListener<Message> {
     // selectorExpression 为*时表示接收所有tag
 
 
@@ -31,7 +32,7 @@ public class MyListener implements RocketMQListener<Object> {
     * */
 
     @Override
-    public void onMessage(Object message) {
-        log.info("=== 收到消息了{}", message);
+    public void onMessage(Message message) {
+        log.info("=== tagA 收到消息了{}", message);
     }
 }
