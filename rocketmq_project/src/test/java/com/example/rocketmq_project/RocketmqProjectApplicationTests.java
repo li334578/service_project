@@ -61,4 +61,12 @@ class RocketmqProjectApplicationTests {
         SendResult s2 = mqSendUtils.sendBatchMessage("my-topic", "tagA", Arrays.asList("hello world7", "hello world8"));
         log.info("s1:{},s2:{}", s1, s2);
     }
+
+    @Test
+    public void testMethod4() {
+        SendResult s1 = mqSendUtils.sendMessage("my-topic", "tagA", "hello world1");
+        SendResult s2 = mqSendUtils.sendMessage("my-topic", "tagB", "hello world2");
+        SendResult s3 = mqSendUtils.sendMessage("my-topic", "tagC", "hello world3");
+        log.info("s1:{},s2:{},s3:{}", s1, s2, s3);
+    }
 }

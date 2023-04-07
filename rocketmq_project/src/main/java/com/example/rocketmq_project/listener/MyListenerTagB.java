@@ -1,10 +1,12 @@
 package com.example.rocketmq_project.listener;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
 import org.apache.rocketmq.common.message.MessageExt;
 import org.apache.rocketmq.spring.annotation.ConsumeMode;
 import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
 import org.apache.rocketmq.spring.core.RocketMQListener;
+import org.apache.rocketmq.spring.core.RocketMQPushConsumerLifecycleListener;
 import org.springframework.stereotype.Component;
 
 /**
@@ -13,11 +15,12 @@ import org.springframework.stereotype.Component;
  * @Version 1.0.0
  * @Author liwenbo
  */
-@Component
-@RocketMQMessageListener(topic = "my-topic", consumerGroup = "my-group", consumeMode = ConsumeMode.ORDERLY, selectorExpression = "*")
-@Slf4j
-public class MyListener implements RocketMQListener<MessageExt> {
+//@Component
+//@RocketMQMessageListener(topic = "my-topic", consumerGroup = "my-group", consumeMode = ConsumeMode.ORDERLY, selectorExpression = "tagB")
+//@Slf4j
+public class MyListenerTagB /*implements RocketMQListener<MessageExt>, RocketMQPushConsumerLifecycleListener */{
     // selectorExpression 为*时表示接收所有tag
+
 
     /*
     *
@@ -30,9 +33,13 @@ public class MyListener implements RocketMQListener<MessageExt> {
     *
     * */
 
-    @Override
-    public void onMessage(MessageExt messageExt) {
-        log.info("123456");
-        log.info("=== 收到消息了{}", new String(messageExt.getBody()));
-    }
+//    @Override
+//    public void onMessage(MessageExt messageExt) {
+//        log.info("=== TagB 收到消息了{}", new String(messageExt.getBody()));
+//    }
+//
+//    @Override
+//    public void prepareStart(DefaultMQPushConsumer consumer) {
+//        consumer.setInstanceName("my-topic-TagB");
+//    }
 }
