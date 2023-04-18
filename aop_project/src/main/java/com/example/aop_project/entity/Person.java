@@ -1,6 +1,7 @@
 package com.example.aop_project.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.example.aop_project.enums.GenderEnum;
@@ -25,6 +26,8 @@ public class Person implements Serializable {
     private String name;
     //性别 1 男 2 女 3未知
     private GenderEnum gender;
+    @TableField(exist = false)
+    private String sex;
     //手机号
     private String phone;
 }

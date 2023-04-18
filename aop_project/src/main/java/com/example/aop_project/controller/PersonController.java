@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * (Person)表控制层
@@ -33,7 +34,7 @@ public class PersonController {
 
     @GetMapping("getAll")
     public List<Person> getAll() {
-        return personService.list();
+        return personService.list().stream().peek(item -> item.setSex(item.getGender().toString())).collect(Collectors.toList());
     }
 
     @GetMapping("/testGetRequestHeader")

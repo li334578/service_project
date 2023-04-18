@@ -10,8 +10,8 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
  * @Version 1.0.0
  * @Author liwenbo
  */
-@JsonDeserialize(using = IEnumDeserializer.class)
-@JsonSerialize(using = IEnumSerializer.class)
+//@JsonDeserialize(using = IEnumDeserializer.class)
+//@JsonSerialize(using = IEnumSerializer.class)
 public enum GenderEnum implements IEnum<Integer> {
 
     MAN(1, "男"),
