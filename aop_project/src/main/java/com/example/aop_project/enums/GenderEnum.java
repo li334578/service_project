@@ -1,6 +1,8 @@
 package com.example.aop_project.enums;
 
 import com.baomidou.mybatisplus.annotation.IEnum;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 /**
  * @Date 10/4/2023 0010 下午 2:37
@@ -8,6 +10,8 @@ import com.baomidou.mybatisplus.annotation.IEnum;
  * @Version 1.0.0
  * @Author liwenbo
  */
+@JsonDeserialize(using = IEnumDeserializer.class)
+@JsonSerialize(using = IEnumSerializer.class)
 public enum GenderEnum implements IEnum<Integer> {
 
     MAN(1, "男"),
