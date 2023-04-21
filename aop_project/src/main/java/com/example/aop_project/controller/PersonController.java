@@ -3,6 +3,7 @@ package com.example.aop_project.controller;
 
 import com.example.aop_project.entity.Person;
 import com.example.aop_project.service.PersonService;
+import com.example.aop_project.service.RetryService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,6 +27,9 @@ public class PersonController {
     @Resource
     private PersonService personService;
 
+    @Resource
+    private RetryService retryService;
+
     @PostMapping("addPerson")
     public void addPerson(@RequestBody Person person) {
         log.info(person.toString());
@@ -41,6 +45,20 @@ public class PersonController {
     public String testGetRequestHeader(@RequestHeader("userId") Long userId) {
         log.info("userId={}", userId);
         return "OK";
+    }
+
+    @GetMapping("retry")
+    public String testRetry() {
+        String result = retryService.mockRetry("PPX");
+        log.info(result);
+        return "OK -> " + result;
+    }
+
+    @GetMapping("retry2")
+    public String testRetry2() {
+        String result = retryService.mockRetry("PPX", 2);
+        log.info(result);
+        return "OK 2 -> " + result;
     }
 }
 
